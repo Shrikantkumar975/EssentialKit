@@ -1,0 +1,10 @@
+{
+  "references": [],
+  "include": ["src/**/*", "frontend/src/ui", "frontend/src/components", "frontend/src/lib"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
