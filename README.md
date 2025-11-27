@@ -6,6 +6,7 @@
 
 -   **Shorten URLs**: Instantly create short links for long URLs.
 -   **QR Code Generator**: Generate and download QR codes for any text, URL, or UPI ID.
+-   **Password Generator**: Create secure, random passwords with customizable options.
 -   **User Accounts**: Sign up and log in to manage your links.
 -   **Authentication**: Secure JWT-based authentication.
 -   **Dark Mode**: Fully functional light and dark mode UI.
@@ -88,8 +89,9 @@ The application will be available at `http://localhost:5173` (or the port shown 
 1.  **Sign Up/Login**: Create an account to track your links.
 2.  **Shorten**: Paste a long URL into the input field and click "Shorten URL".
 3.  **QR Code**: Navigate to the "QR Code" tab, enter text/URL, and download the generated QR image.
-4.  **Copy & Share**: Copy the generated short link and share it.
-5.  **Visit**: Clicking the short link will redirect you to the original URL.
+4.  **Password Generator**: Select "Password Gen" from the Features menu to create secure passwords.
+5.  **Copy & Share**: Copy the generated short link and share it.
+6.  **Visit**: Clicking the short link will redirect you to the original URL.
 
 ## API Endpoints
 
@@ -116,7 +118,7 @@ url_shortner/
 │   ├── src/
 │   │   ├── components/     # Reusable UI components (Navbar, etc.)
 │   │   ├── context/        # Auth Context
-│   │   ├── pages/          # Page components (Home, Auth, QrGenerator)
+│   │   ├── pages/          # Page components (Home, Auth, QrGenerator, PasswordGenerator)
 │   │   ├── App.jsx         # Main App component
 │   │   └── ...
 │   └── ...
