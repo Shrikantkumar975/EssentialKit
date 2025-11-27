@@ -7,6 +7,7 @@ import { Copy, Link as LinkIcon, Loader2 } from "lucide-react";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import AuthPage from "@/pages/Auth";
 import QrGenerator from "@/pages/QrGenerator";
+import PasswordGenerator from "@/pages/PasswordGenerator";
 import { Navbar } from "@/components/Navbar";
 
 function Home() {
@@ -138,6 +139,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/qr" element={<QrGenerator />} />
+          <Route path="/password" element={<PasswordGenerator />} />
         </Routes>
       </Router>
     </AuthProvider>
