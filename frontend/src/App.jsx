@@ -8,10 +8,13 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 import AuthPage from "@/pages/Auth";
 import QrGenerator from "@/pages/QrGenerator";
 import PasswordGenerator from "@/pages/PasswordGenerator";
+import Analytics from "@/pages/Analytics";
 import { Navbar } from "@/components/Navbar";
 
 function Home() {
   const [longUrl, setLongUrl] = useState("");
+  const [customAlias, setCustomAlias] = useState("");
+  const [expiresAt, setExpiresAt] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -30,6 +33,8 @@ function Home() {
       const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/shorten`, {
         longUrl,
+        customAlias: customAlias.trim() || undefined,
+        expiresAt: expiresAt || undefined,
       }, config);
       setShortUrl(response.data.shortUrl);
     } catch (err) {
@@ -74,6 +79,33 @@ function Home() {
                 required
                 className="h-12 rounded-xl border-zinc-200 bg-zinc-50 px-4 text-base transition-all focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-500/20 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-600 dark:focus:border-violet-500 dark:focus:bg-zinc-950"
               />
+            </div>
+
+            <div className="space-y-2">
+              <Input
+                type="text"
+                placeholder={token ? "Custom Alias (Optional)" : "Login to use Custom Alias"}
+                value={customAlias}
+                onChange={(e) => setCustomAlias(e.target.value)}
+                disabled={!token}
+                className="h-12 rounded-xl border-zinc-200 bg-zinc-50 px-4 text-base transition-all focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-500/20 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-600 dark:focus:border-violet-500 dark:focus:bg-zinc-950 disabled:opacity-60 disabled:cursor-not-allowed"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 ml-1">
+                Expiration Date {token ? "(Optional)" : "(Login required)"}
+              </label>
+              <Input
+                type="datetime-local"
+                value={expiresAt}
+                onChange={(e) => setExpiresAt(e.target.value)}
+                disabled={!token}
+                className="h-12 rounded-xl border-zinc-200 bg-zinc-50 px-4 text-base transition-all focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-500/20 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-600 dark:focus:border-violet-500 dark:focus:bg-zinc-950 disabled:opacity-60 disabled:cursor-not-allowed"
+              />
+              {!token && (
+                <p className="text-xs text-zinc-500 ml-1">Guest links expire in 10 days.</p>
+              )}
             </div>
 
             <Button
@@ -123,6 +155,14 @@ function Home() {
               <p className="mt-2 text-center text-xs font-medium text-zinc-400 dark:text-zinc-500">
                 Click to copy
               </p>
+
+              {token && (
+                <div className="mt-4 text-center">
+                  <Link to={`/analytics/${shortUrl.split('/').pop()}`} className="text-sm font-medium text-violet-600 hover:underline dark:text-violet-400">
+                    View Analytics
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -140,6 +180,7 @@ function App() {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/qr" element={<QrGenerator />} />
           <Route path="/password" element={<PasswordGenerator />} />
+          <Route path="/analytics/:shortId" element={<Analytics />} />
         </Routes>
       </Router>
     </AuthProvider>
